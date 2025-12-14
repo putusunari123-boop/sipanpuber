@@ -135,6 +135,50 @@
         nav a:hover {
             opacity: 0.8;
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 15px;
+                max-width: 95%;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .logo-title {
+                font-size: 1rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.6rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            input {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .navbar .container {
+                padding: 0 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -178,6 +222,41 @@
             <label>Tingkat Kepuasan: <input type="text" id="kepuasan" required></label>
             <button type="submit">Simpan</button>
         </form>
+
+        <h2 style="margin-top: 30px;">Edit Harga & Kuota Pupuk</h2>
+        <form id="priceForm">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <strong>Jenis Pupuk</strong>
+                <strong>HET (Rp)</strong>
+                <strong>Kuota (kg)</strong>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: center;">
+                <span>Urea</span>
+                <input type="text" id="ureaPrice" placeholder="Rp 250.000" required>
+                <input type="text" id="ureaQuota" placeholder="400" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: center;">
+                <span>NPK Phonska</span>
+                <input type="text" id="npkPrice" placeholder="Rp 270.000" required>
+                <input type="text" id="npkQuota" placeholder="200" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: center;">
+                <span>SP-36</span>
+                <input type="text" id="sp36Price" placeholder="Rp 235.000" required>
+                <input type="text" id="sp36Quota" placeholder="100" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: center;">
+                <span>ZA</span>
+                <input type="text" id="zaPrice" placeholder="Rp 185.000" required>
+                <input type="text" id="zaQuota" placeholder="150" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: center;">
+                <span>Organik</span>
+                <input type="text" id="organikPrice" placeholder="Rp 95.000" required>
+                <input type="text" id="organikQuota" placeholder="200" required>
+            </div>
+            <button type="submit" style="margin-top: 20px;">Simpan Harga & Kuota</button>
+        </form>
     </div>
 </div>
 
@@ -200,6 +279,25 @@
             document.getElementById('petani').value = stats.petani;
             document.getElementById('kios').value = stats.kios;
             document.getElementById('kepuasan').value = stats.kepuasan;
+
+            // Load current prices
+            const prices = JSON.parse(localStorage.getItem('sipanpuberPrices')) || {
+                urea: { price: 'Rp 250.000', quota: '400 kg' },
+                npk: { price: 'Rp 270.000', quota: '200 kg' },
+                sp36: { price: 'Rp 235.000', quota: '100 kg' },
+                za: { price: 'Rp 185.000', quota: '150 kg' },
+                organik: { price: 'Rp 95.000', quota: '200 kg' }
+            };
+            document.getElementById('ureaPrice').value = prices.urea.price;
+            document.getElementById('ureaQuota').value = prices.urea.quota;
+            document.getElementById('npkPrice').value = prices.npk.price;
+            document.getElementById('npkQuota').value = prices.npk.quota;
+            document.getElementById('sp36Price').value = prices.sp36.price;
+            document.getElementById('sp36Quota').value = prices.sp36.quota;
+            document.getElementById('zaPrice').value = prices.za.price;
+            document.getElementById('zaQuota').value = prices.za.quota;
+            document.getElementById('organikPrice').value = prices.organik.price;
+            document.getElementById('organikQuota').value = prices.organik.quota;
         } else {
             alert('Username atau password salah!');
         }
@@ -214,7 +312,35 @@
             kepuasan: document.getElementById('kepuasan').value
         };
         localStorage.setItem('sipanpuberStats', JSON.stringify(stats));
-        alert('Data berhasil disimpan!');
+        alert('Data statistik berhasil disimpan!');
+    });
+
+    document.getElementById('priceForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const prices = {
+            urea: {
+                price: document.getElementById('ureaPrice').value,
+                quota: document.getElementById('ureaQuota').value
+            },
+            npk: {
+                price: document.getElementById('npkPrice').value,
+                quota: document.getElementById('npkQuota').value
+            },
+            sp36: {
+                price: document.getElementById('sp36Price').value,
+                quota: document.getElementById('sp36Quota').value
+            },
+            za: {
+                price: document.getElementById('zaPrice').value,
+                quota: document.getElementById('zaQuota').value
+            },
+            organik: {
+                price: document.getElementById('organikPrice').value,
+                quota: document.getElementById('organikQuota').value
+            }
+        };
+        localStorage.setItem('sipanpuberPrices', JSON.stringify(prices));
+        alert('Data harga & kuota berhasil disimpan!');
     });
 </script>
 
