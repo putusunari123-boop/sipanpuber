@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIPANPUBER - Sistem Informasi Pelayanan Pupuk Bersubsidi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .logo-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: normal;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url("bg.sunnn\ 2.jpg.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            image-rendering: crisp-edges;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #2e7d32;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: #f5f5f5;
+            padding: 3rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Info Section */
+        .info-section {
+            padding: 4rem 0;
+        }
+
+        .info-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #2e7d32;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* Price Table */
+        .price-table {
+            width: 100%;
+            margin-top: 1rem;
+            border-collapse: collapse;
+        }
+
+        .price-table th,
+        .price-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price-table th {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .price-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Procedure Section */
+        .procedure {
+            background: #f5f5f5;
+            padding: 4rem 0;
+        }
+
+        .procedure-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #2e7d32;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-card h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1b5e20;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Alert Box */
+        .alert {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-left-color: #17a2b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid,
+            .info-grid,
+            .procedure-steps,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: #2e7d32;
+            border-bottom: 3px solid #2e7d32;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">
+               <img src="logo.sun.svg" alt="Logo">
+            </div>
+            <div class="logo-text">
+                <span class="logo-title">SIPANPUBER</span>
+                <span class="logo-subtitle">Dinas Pertanian Kab. Buleleng</span>
+            </div>
+        </div>
+        <ul>
+            <li><a href="#beranda">Beranda</a></li>
+            <li><a href="#info">Informasi</a></li>
+            <li><a href="#prosedur">Prosedur</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+            <li><a href="admin.html">Admin</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="beranda">
+    <div class="container">
+        <h1>Sistem Informasi Pelayanan Pupuk Bersubsidi</h1>
+        <p>Memastikan pupuk bersubsidi tepat sasaran untuk petani Indonesia</p>
+        <a href="#info" class="btn">Pelajari Lebih Lanjut</a>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+    <div class="container">
+        <h2>Data Distribusi Pupuk 2025</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">2.5 Juta</div>
+                <div class="stat-label">Ton Pupuk Tersalurkan</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">125.000</div>
+                <div class="stat-label">Petani Terdaftar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">450</div>
+                <div class="stat-label">Kios Resmi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Tingkat Kepuasan</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INFO SECTION -->
+<section class="info-section" id="info">
+    <div class="container">
+        <h2>Informasi Lengkap Pupuk Bersubsidi</h2>
+
+        <div class="alert alert-info">
+            <strong>📢 Pengumuman:</strong> Penyaluran pupuk bersubsidi periode Januari-Maret 2025 sudah dimulai. Pastikan Anda terdaftar sebagai petani penerima subsidi.
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="openTab(event, 'jenis')">Jenis Pupuk</button>
+            <button class="tab" onclick="openTab(event, 'harga')">Harga & Kuota</button>
+            <button class="tab" onclick="openTab(event, 'syarat')">Syarat & Ketentuan</button>
+            <button class="tab" onclick="openTab(event, 'wilayah')">Wilayah Distribusi</button>
+        </div>
+
+        <div id="jenis" class="tab-content active">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><span class="icon">🌱</span> Urea</h3>
+                    <p><strong>Fungsi:</strong> Sumber nitrogen untuk pertumbuhan vegetatif tanaman</p>
+                    <p><strong>Kandungan:</strong> 46% N (Nitrogen)</p>
+                    <p><strong>Warna:</strong> Putih kristal</p>
+                    <p><strong>Kemasan:</strong> 50 kg per karung</p>
+                    <p><strong>Tanaman:</strong> Padi, jagung, tebu, sayuran</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><span class="icon">🌿</span> NPK Phonska</h3>
+                    <p><strong>Fungsi:</strong> Pupuk majemuk untuk pertumbuhan optimal</p>
+                    <p><strong>Kandungan:</strong> 15% N, 15% P₂O₅, 15% K₂O</p>
+                    <p><strong>Warna:</strong> Merah muda granul</p>
+                    <p><strong>Kemasan:</strong> 50 kg per karung</p>
+                    <p><strong>Tanaman:</strong> Padi, jagung, kedelai, hortikultura</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><span class="icon">🌾</span> SP-36</h3>
+                    <p><strong>Fungsi:</strong> Sumber fosfor untuk pembungaan dan pembuahan</p>
+                    <p><strong>Kandungan:</strong> 36% P₂O₅ (Fosfor)</p>
+                    <p><strong>Warna:</strong> Abu-abu granul</p>
+                    <p><strong>Kemasan:</strong> 50 kg per karung</p>
+                    <p><strong>Tanaman:</strong> Padi, jagung, kacang-kacangan</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><span class="icon">🌺</span> ZA (Amonium Sulfat)</h3>
+                    <p><strong>Fungsi:</strong> Sumber nitrogen dan sulfur</p>
+                    <p><strong>Kandungan:</strong> 21% N, 24% S</p>
+                    <p><strong>Warna:</strong> Putih kristal</p>
+                    <p><strong>Kemasan:</strong> 50 kg per karung</p>
+                    <p><strong>Tanaman:</strong> Tebu, tembakau, kelapa sawit</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><span class="icon">🪴</span> NPK Formula Lainnya</h3>
+                    <p><strong>NPK 16-16-16:</strong> Untuk tanaman hortikultura</p>
+                    <p><strong>NPK 12-12-17:</strong> Untuk padi sawah</p>
+                    <p><strong>Organik:</strong> Pupuk kompos dan kandang</p>
+                    <p><strong>Kemasan:</strong> Berbagai ukuran</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><span class="icon">💧</span> Pupuk Organik Cair</h3>
+                    <p><strong>Fungsi:</strong> Meningkatkan kesuburan tanah</p>
+                    <p><strong>Kandungan:</strong> Mikroorganisme bermanfaat</p>
+                    <p><strong>Kemasan:</strong> Botol 1 liter</p>
+                    <p><strong>Aplikasi:</strong> Semprot atau siram</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="harga" class="tab-content">
+            <h3>Harga Eceran Tertinggi (HET) Pupuk Bersubsidi 2025</h3>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>Jenis Pupuk</th>
+                        <th>Kemasan</th>
+                        <th>HET (Rp)</th>
+                        <th>Kuota/Petani/Musim</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Urea</td>
+                        <td>50 kg</td>
+                        <td>Rp 250.000</td>
+                        <td>400 kg</td>
+                    </tr>
+                    <tr>
+                        <td>NPK Phonska</td>
+                        <td>50 kg</td>
+                        <td>Rp 270.000</td>
+                        <td>200 kg</td>
+                    </tr>
+                    <tr>
+                        <td>SP-36</td>
+                        <td>50 kg</td>
+                        <td>Rp 235.000</td>
+                        <td>100 kg</td>
+                    </tr>
+                    <tr>
+                        <td>ZA</td>
+                        <td>50 kg</td>
+                        <td>Rp 185.000</td>
+                        <td>150 kg</td>
+                    </tr>
+                    <tr>
+                        <td>Organik</td>
+                        <td>40 kg</td>
+                        <td>Rp 95.000</td>
+                        <td>200 kg</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-success" style="margin-top: 2rem;">
+                <strong>✅ Catatan Penting:</strong> Harga di atas sudah termasuk subsidi pemerintah. Pembelian di luar HET dapat dilaporkan ke petugas pengawas.
+            </div>
+        </div>
+
+        <div id="syarat" class="tab-content">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📋 Syarat Penerima Subsidi</h3>
+                    <ul>
+                        <li>Memiliki lahan pertanian (milik/sewa/penggarap)</li>
+                        <li>Terdaftar dalam Daftar Petani Penerima Subsidi (DPPS)</li>
+                        <li>Memiliki KTP dan Kartu Tani</li>
+                        <li>Luas lahan minimal 0.25 hektar</li>
+                        <li>Aktif melakukan usaha tani</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>📝 Dokumen yang Diperlukan</h3>
+                    <ul>
+                        <li>KTP asli dan fotokopi</li>
+                        <li>Kartu Keluarga</li>
+                        <li>Kartu Tani (jika sudah ada)</li>
+                        <li>Surat keterangan lahan dari desa</li>
+                        <li>Pas foto 3x4 (2 lembar)</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>⚠️ Larangan</h3>
+                    <ul>
+                        <li>Menjual kembali pupuk bersubsidi</li>
+                        <li>Memindahtangankan ke non-petani</li>
+                        <li>Menggunakan untuk keperluan non-pertanian</li>
+                        <li>Menimbun atau menyimpan berlebihan</li>
+                        <li>Membeli melebihi kuota yang ditetapkan</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>🎯 Sanksi Pelanggaran</h3>
+                    <ul>
+                        <li>Pencabutan dari daftar penerima subsidi</li>
+                        <li>Denda administratif</li>
+                        <li>Proses hukum sesuai UU No. 19/2013</li>
+                        <li>Blacklist permanen dari program</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="wilayah" class="tab-content">
+            <h3>Lokasi Kios Pupuk Bersubsidi</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📍 Wilayah Kecamatan Sawan</h3>
+                    <ul>
+                        <li><strong>Kios Subur Tani</strong> - Desa Sangsit</li>
+                        <li><strong>UD Makmur Jaya</strong> - Desa Sawan</li>
+                        <li><strong>Toko Tani Sejahtera</strong> - Desa Jagaraga</li>
+                        <li><strong>Koperasi Tani Maju</strong> - Desa Bungkulan</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>📍 Wilayah Kecamatan Buleleng</h3>
+                    <ul>
+                        <li><strong>Toko Agro Mandiri</strong> - Kota Singaraja</li>
+                        <li><strong>CV Pupuk Nusantara</strong> - Kampung Baru</li>
+                        <li><strong>UD Berkat Tani</strong> - Kampung Bugis</li>
+                        <li><strong>Kios Anugerah</strong> - Penarukan</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>📍 Wilayah Kecamatan Sukasada</h3>
+                    <ul>
+                        <li><strong>Toko Pertanian Jaya</strong> - Sukasada</li>
+                        <li><strong>UD Subur Makmur</strong> - Pegadungan</li>
+                        <li><strong>Koperasi Tani Bersama</strong> - Sambangan</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>⏰ Jam Operasional</h3>
+                    <ul>
+                        <li><strong>Senin - Jumat:</strong> 08.00 - 16.00 WITA</li>
+                        <li><strong>Sabtu:</strong> 08.00 - 12.00 WITA</li>
+                        <li><strong>Minggu & Libur:</strong> Tutup</li>
+                        <li><strong>Musim Tanam:</strong> Buka setiap hari</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROSEDUR -->
+<section class="procedure" id="prosedur">
+    <div class="container">
+        <h2>Prosedur Pembelian Pupuk Bersubsidi</h2>
+        <div class="procedure-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Pendaftaran</h3>
+                <p>Daftarkan diri Anda sebagai petani penerima subsidi di kantor desa atau kelurahan dengan membawa dokumen persyaratan</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Verifikasi Data</h3>
+                <p>Petugas akan memverifikasi data dan lahan pertanian Anda. Proses ini memakan waktu 3-7 hari kerja</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Terima Kartu Tani</h3>
+                <p>Setelah disetujui, Anda akan menerima Kartu Tani sebagai identitas penerima pupuk bersubsidi</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Kunjungi Kios Resmi</h3>
+                <p>Datang ke kios pupuk bersubsidi terdekat dengan membawa KTP dan Kartu Tani</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3>Pembelian</h3>
+                <p>Lakukan pembelian sesuai kuota Anda. Petugas akan mencatat transaksi dalam sistem</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">6</div>
+                <h3>Penggunaan</h3>
+                <p>Gunakan pupuk untuk lahan pertanian Anda sesuai dosis anjuran dan jadwal pemupukan</p>
+            </div>
+        </div>
+
+        <div class="alert" style="margin-top: 2rem;">
+            <strong>💡 Tips:</strong> Lakukan pembelian pupuk sesuai kebutuhan dan jadwal tanam. Jangan menimbun pupuk karena dapat menurunkan kualitas dan melanggar peraturan.
+        </div>
+    </div>
+</section>
+
+<!-- KONTAK -->
+<section class="contact" id="kontak">
+    <div class="container">
+        <h2>Hubungi Kami</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3>📞 Layanan Pengaduan</h3>
+                <p><strong>Hotline:</strong> 0812-3456-7890</p>
+                <p><strong>Telepon:</strong> (0362) 123456</p>
+                <p><strong>WhatsApp:</strong> 0812-3456-7890</p>
+                <p><strong>Email:</strong> pengaduan@sipanpuber.go.id</p>
+            </div>
+
+            <div class="contact-card">
+                <h3>🏢 Kantor Dinas Pertanian</h3>
+                <p><strong>Alamat:</strong> Jl. Gajah Mada No. 123, Singaraja, Buleleng, Bali</p>
+                <p><strong>Jam Kerja:</strong> Senin-Jumat, 08.00-16.00 WITA</p>
+                <p><strong>Website:</strong> www.pertanian.buleleng.go.id</p>
+            </div>
+
+            <div class="contact-card">
+                <h3>📱 Media Sosial</h3>
+                <p><strong>Facebook:</strong> @SIPANPUBERBuleleng</p>
+                <p><strong>Instagram:</strong> @sipanpuber_official</p>
+                <p><strong>Twitter:</strong> @sipanpuber</p>
+                <p><strong>YouTube:</strong> SIPANPUBER Channel</p>
+            </div>
+
+            <div class="contact-card">
+                <h3>🚨 Laporan Pelanggaran</h3>
+                <p>Laporkan penyalahgunaan pupuk bersubsidi seperti:</p>
+                <ul>
+                    <li>Penjualan ilegal</li>
+                    <li>Harga di atas HET</li>
+                    <li>Penimbunan</li>
+                    <li>Pemalsuan pupuk</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <p>&copy; 2025 SIPANPUBER - Sistem Informasi Pelayanan Pupuk Bersubsidi</p>
+        <p>Dinas Pertanian Kabupaten Buleleng, Provinsi Bali</p>
+        <div class="footer-links">
+            <a href="#">Kebijakan Privasi</a>
+            <a href="#">Syarat & Ketentuan</a>
+            <a href="#">Peta Situs</a>
+            <a href="#">FAQ</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function openTab(evt, tabName) {
+        console.log('openTab called with tabName:', tabName);
+        const tabcontent = document.getElementsByClassName("tab-content");
+        for (let i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+
+        const tablinks = document.getElementsByClassName("tab");
+        for (let i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+        console.log('Tab switched to:', tabName);
+    }
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            console.log('Smooth scroll triggered for:', this.getAttribute('href'));
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+                console.log('Scrolled to target');
+            } else {
+                console.log('Target not found for:', this.getAttribute('href'));
+            }
+        });
+    });
+
+    // Load stats from localStorage
+    const defaultStats = {
+        tonPupuk: '2.5 Juta',
+        petani: '125.000',
+        kios: '450',
+        kepuasan: '98%'
+    };
+    const stats = JSON.parse(localStorage.getItem('sipanpuberStats')) || defaultStats;
+    document.querySelectorAll('.stat-number').forEach((el, index) => {
+        const keys = Object.keys(stats);
+        el.textContent = stats[keys[index]];
+    });
+</script>
+
+</body>
+</html>
